@@ -3,9 +3,21 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Updater.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="GameLogicBase.cpp" />
+    <ClCompile Include="Tetris.cpp" />
+    <ClCompile Include="Board.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="DoubleBufferedConsole.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Updater.h" />
+    <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="IUpdatable.h" />
+    <ClInclude Include="GameLogicBase.h" />
+    <ClInclude Include="Tetris.h" />
   </ItemGroup>
 </Project>
