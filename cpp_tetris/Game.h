@@ -17,9 +17,11 @@ public:
 	void update(const float& delta) noexcept;
 	void render() noexcept;
 
-private:
+public:
 	static constexpr int console_width = 30;
 	static constexpr int console_height = 20;
+
+private:
 
 	std::unique_ptr<GameLogicBase> game_logic;
 	std::unique_ptr<Renderer> renderer;

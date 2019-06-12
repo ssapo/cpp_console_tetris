@@ -11,7 +11,7 @@ public:
 	explicit Updater();
 	virtual ~Updater();
 
-	void update(const float& delta) const noexcept;
+	void update(const float& delta) noexcept;
 
 	void add(int order, IUpdatable* object) noexcept;
 

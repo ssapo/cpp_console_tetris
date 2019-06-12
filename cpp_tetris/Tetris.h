@@ -2,13 +2,16 @@
 #include "GameLogicBase.h"
 
 class Board;
+class Game;
 class Tetris : public GameLogicBase
 {
 public:
-	explicit Tetris(const int width, const int height);
+	explicit Tetris();
 	virtual ~Tetris();
 
-private:
+	virtual bool initialize(Game* game) override;
 
+private:
 	std::unique_ptr<Board> board;
+
 };

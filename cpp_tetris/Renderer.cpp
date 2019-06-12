@@ -12,9 +12,9 @@ Renderer::~Renderer()
 
 }
 
-void Renderer::render() const noexcept
+void Renderer::render() noexcept
 {
-	buffer->clear(L' ', BACKGROUND_INTENSITY);
+	buffer->clear(L' ', NULL);
 
 	for (const auto& e : objects)
 	{

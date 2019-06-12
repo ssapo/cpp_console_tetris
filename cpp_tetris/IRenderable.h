@@ -2,6 +2,6 @@
 class Renderer;
 struct IRenderable
 {
-	virtual void render(const Renderer* renderer) noexcept abstract;
+	virtual void render(Renderer* const renderer) noexcept abstract;
 };
 

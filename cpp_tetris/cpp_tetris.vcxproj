@@ -133,7 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
-    <ClInclude Include="Define.h" />
     <ClInclude Include="DoubleBufferedConsole.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLogicBase.h" />

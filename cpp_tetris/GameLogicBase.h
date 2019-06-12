@@ -10,9 +10,16 @@ public:
 	explicit GameLogicBase();
 	virtual ~GameLogicBase();
 
-	void render(const Renderer* renderer) noexcept;
-	void update(const Updater* updater, const float& delta) noexcept;
+	void render(Renderer* const renderer) noexcept;
+	void update(Updater* const updater, float delta) noexcept;
+
+	bool start_game();
+	virtual bool initialize(Game* game) abstract;
+
+	void set_game(Game* game) { m_game = game; }
+	Game* get_game() const { return m_game; }
 
 private:
+	Game* m_game;
 };
 

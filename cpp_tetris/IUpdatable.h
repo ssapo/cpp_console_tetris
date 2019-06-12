@@ -1,5 +1,5 @@
 #pragma once
 struct IUpdatable
 {
-	virtual void update(const float& delta) noexcept abstract;
+	virtual void update(float delta) noexcept abstract;
 };

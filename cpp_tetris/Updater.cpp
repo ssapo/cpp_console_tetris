@@ -11,7 +11,7 @@ Updater::~Updater()
 
 }
 
-void Updater::update(const float& delta) const noexcept
+void Updater::update(const float& delta) noexcept
 {
 	for (const auto& e : objects)
 	{

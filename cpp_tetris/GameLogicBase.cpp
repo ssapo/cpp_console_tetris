@@ -4,6 +4,7 @@
 #include "Updater.h"
 
 GameLogicBase::GameLogicBase()
+	: m_game(nullptr)
 {
 }
 
@@ -12,12 +13,17 @@ GameLogicBase::~GameLogicBase()
 
 }
 
-void GameLogicBase::render(const Renderer* renderer) noexcept
+bool GameLogicBase::start_game()
+{
+	return m_game ? initialize(m_game) : false;
+}
+
+void GameLogicBase::render(Renderer* const renderer) noexcept
 {
 	renderer->render();
 }
 
-void GameLogicBase::update(const Updater* updater, const float& delta) noexcept
+void GameLogicBase::update(Updater* const updater, float delta) noexcept
 {
 	updater->update(delta);
 }

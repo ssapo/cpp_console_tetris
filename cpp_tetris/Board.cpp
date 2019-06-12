@@ -1,10 +1,10 @@
 #include "Board.h"
-#include "Define.h"
+#include "Renderer.h"
 
 Board::Board(const int width, const int height)
 	: width(width)
 	, height(height)
-	, color(FOREGROUND_BLUE)
+	, color(Renderer::TextColor::blue)
 {
 }
 
@@ -13,12 +13,12 @@ Board::~Board()
 
 }
 
-void Board::render(const Renderer* renderer) noexcept
+void Board::render(Renderer* const renderer) noexcept
 {
-	renderer->write()
+	renderer->write(3, 5, L'бс', color);
 }
 
-void Board::update(const float& delta) noexcept
+void Board::update(float delta) noexcept
 {
 
 }
