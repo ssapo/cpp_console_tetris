@@ -5,7 +5,7 @@ class Board;
 class Tetris : public GameLogicBase
 {
 public:
-	explicit Tetris();
+	explicit Tetris(const int width, const int height);
 	virtual ~Tetris();
 
 private:
