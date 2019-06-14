@@ -20,10 +20,6 @@ public:
 	Renderer* get_renderer() const { return renderer.get(); }
 	Updater* get_updater() const { return updater.get(); }
 
-public:
-	static constexpr int console_width = 30;
-	static constexpr int console_height = 20;
-
 private:
 
 	std::unique_ptr<GameLogicBase> game_logic;

@@ -2,7 +2,7 @@
 #include "Renderer.h"
 
 Board::Board(const int w, const int h)
-	: width(w / 2)
+	: width(w)
 	, height(h)
 	, color(Renderer::TextColor::blue)
 {
@@ -43,10 +43,4 @@ void Board::render(Renderer* const renderer) noexcept
 			renderer->write(x * 2 + 1, y, L' ', color);
 		}
 	}
-}
-
-
-void Board::update(float delta) noexcept
-{
-	
 }

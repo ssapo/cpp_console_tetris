@@ -19,5 +19,6 @@
     <ClInclude Include="IUpdatable.h" />
     <ClInclude Include="GameLogicBase.h" />
     <ClInclude Include="Tetris.h" />
+    <ClInclude Include="Cell.h" />
   </ItemGroup>
 </Project>

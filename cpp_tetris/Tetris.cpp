@@ -19,8 +19,8 @@ bool Tetris::initialize()
 	auto renderer = get_game()->get_renderer();
 	auto updater = get_game()->get_updater();
 
-	constexpr int width = Game::console_width;
-	constexpr int height = Game::console_height;
+	constexpr int width = GAME_WIDTH;
+	constexpr int height = GAME_HEIGHT;
 
 	board = std::make_unique<Board>(width, height);
 	if (nullptr == board)
@@ -29,10 +29,17 @@ bool Tetris::initialize()
 	}
 
 	renderer->add(0, board.get());
-	updater->add(0, board.get());
 
 
 
+
+
+	updater->add(0, this);
 	return true;
+}
+
+void Tetris::update(float delta) noexcept
+{
+
 }
 
