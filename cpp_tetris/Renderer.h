@@ -11,7 +11,7 @@ public:
 	typedef DoubleBufferedConsole<wchar_t> DoubleBuffering;
 	typedef int order;
 
-	explicit Renderer(LPCWSTR title, const short width, const short height);
+	explicit Renderer(LPCWSTR title);
 	virtual ~Renderer();
 	
 	void render() noexcept;

@@ -15,7 +15,7 @@ GameLogicBase::~GameLogicBase()
 
 bool GameLogicBase::start_game()
 {
-	return m_game ? initialize(m_game) : false;
+	return m_game ? initialize() : false;
 }
 
 void GameLogicBase::render(Renderer* const renderer) noexcept

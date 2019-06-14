@@ -44,7 +44,7 @@ public:
 		:
 		writeRect{ 0,0,width,height },
 		charInfoBuffer(new CHAR_INFO[width * height]),
-		bufferSize{ width,height },
+		bufferSize{ width, height },
 		width(width),
 		height(height)
 	{

@@ -9,7 +9,7 @@ public:
 	explicit Tetris();
 	virtual ~Tetris();
 
-	virtual bool initialize(Game* game) override;
+	virtual bool initialize() override;
 
 private:
 	std::unique_ptr<Board> board;
