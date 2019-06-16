@@ -1,2 +1,3 @@
-# cpp_review
-cpp 공부용 저장소
+# cpp console tetris
+
+visual studio 2019 c++
