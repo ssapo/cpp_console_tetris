@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "IRenderable.h"
+#include <memory>
 
 Renderer::Renderer(LPCWSTR title)
 	: buffer(std::make_unique<DoubleBuffering>(title, 100, 100))
@@ -18,19 +19,39 @@ void Renderer::render() noexcept
 
 	for (const auto& e : objects)
 	{
-		e.second->render(this);
+		if (nullptr == e.second)
+		{
+			continue;
+		}
+
+		const auto& container = *e.second.get();
+		for (const auto& f : container)
+		{
+			f.second->render(this);
+		}
 	}
 
 	buffer->flip();
 }
 
-void Renderer::add(int order, IRenderable* object) noexcept
+void Renderer::add(int order, int sort, IRenderable* object) noexcept
 {
-	objects.emplace(order, object);
+	if (objects.end() == objects.find(order))
+	{
+		auto map = std::make_unique<std::map<int, IRenderable*>>();
+		map->emplace(sort, object);
+		objects.emplace(order, std::move(map));
+	}
+	else
+	{
+		auto map = objects[order].get();
+		map->emplace(sort, object);
+	}
 }
 
 void Renderer::write(const int x, const int y, const wchar_t c, unsigned short attribute)
 {
-	buffer->write(x, y, c, attribute);
+	buffer->write(x * 2, y, c, attribute);
+	buffer->write(x * 2 + 1, y, TextCell::empty, attribute);
 }
 

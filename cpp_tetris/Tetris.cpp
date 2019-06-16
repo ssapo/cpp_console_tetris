@@ -3,6 +3,7 @@
 #include "Board.h"
 #include "Renderer.h"
 #include "Updater.h"
+#include "Cell.h"
 
 Tetris::Tetris()
 {
@@ -22,17 +23,24 @@ bool Tetris::initialize()
 	constexpr int width = GAME_WIDTH;
 	constexpr int height = GAME_HEIGHT;
 
-	board = std::make_unique<Board>(width, height);
+	board = std::make_unique<Board>(width, height, Renderer::TextColor::red);
 	if (nullptr == board)
 	{
 		return false;
 	}
 
-	renderer->add(0, board.get());
+	renderer->add(0, 0, board.get());
 
+	for (int y = 0; y < CELL_HEIGHT; ++y)
+	{
+		for (int x = 0; x < CELL_WIDTH; ++x)
+		{
+			int index = (y * CELL_WIDTH) + x;
 
-
-
+			cells[index] = std::make_unique<Cell>(x + 1, y + 1, true, Renderer::TextColor::gray);
+			renderer->add(1, index, cells[index].get());
+		}
+	}
 
 	updater->add(0, this);
 	return true;

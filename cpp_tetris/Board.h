@@ -7,7 +7,7 @@
 class Board : public IRenderable
 {
 public:
-	explicit Board(const int width, const int height);
+	explicit Board(int w, int h, unsigned short color);
 	virtual ~Board();
 
 	virtual void render(Renderer* const renderer) noexcept override;
@@ -24,4 +24,3 @@ private:
 
 	std::vector<wchar_t> boards;
 };
-

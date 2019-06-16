@@ -15,7 +15,7 @@ public:
 	virtual ~Renderer();
 	
 	void render() noexcept;
-	void add(int order, IRenderable* object) noexcept;
+	void add(int order, int sort, IRenderable* object) noexcept;
 
 	void write(const int x, const int y, const wchar_t c, unsigned short attribute);
 
@@ -42,7 +42,14 @@ public:
 		static constexpr unsigned short white			= light | dark_gray;
 	};
 
+	struct TextCell
+	{
+		static constexpr wchar_t fill = L'¡á';
+		static constexpr wchar_t empty = L' ';
+		static constexpr wchar_t cell = L'¡¤';
+	};
+
 private:
-	std::map<int, IRenderable*> objects;
+	std::map<int, std::unique_ptr<std::map<int, IRenderable*>>> objects;
 	std::unique_ptr<DoubleBuffering> buffer;
 };

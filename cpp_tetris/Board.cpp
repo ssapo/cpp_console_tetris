@@ -1,10 +1,10 @@
 #include "Board.h"
 #include "Renderer.h"
 
-Board::Board(const int w, const int h)
+Board::Board(int w, int h, unsigned short color)
 	: width(w)
 	, height(h)
-	, color(Renderer::TextColor::blue)
+	, color(color)
 {
 	boards.reserve(width * height);
 	for (int y = 0; y < height; ++y)
@@ -39,8 +39,7 @@ void Board::render(Renderer* const renderer) noexcept
 	{
 		for (int x = 0; x < width; ++x)
 		{
-			renderer->write(x * 2, y, boards[width * y + x], color);
-			renderer->write(x * 2 + 1, y, L' ', color);
+			renderer->write(x, y, boards[width * y + x], color);
 		}
 	}
 }

@@ -8,6 +8,7 @@
     <ClCompile Include="GameLogicBase.cpp" />
     <ClCompile Include="Tetris.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Cell.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />

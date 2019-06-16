@@ -1,7 +1,7 @@
 #pragma once
 #include "GameLogicBase.h"
-#include "Cell.h"
 #include "IUpdatable.h"
+#include <array>
 
 class Board;
 class Game;
@@ -19,8 +19,11 @@ public:
 public:
 	static constexpr int GAME_WIDTH = 15;
 	static constexpr int GAME_HEIGHT = 25;
+	static constexpr int CELL_WIDTH = (GAME_WIDTH - 2);
+	static constexpr int CELL_HEIGHT = (GAME_HEIGHT - 2);
+	static constexpr int TOTAL_CELLS = (CELL_WIDTH) * (CELL_HEIGHT);
 
 private:
 	std::unique_ptr<Board> board;
-	std::array<std::unique_ptr<Cell>, (GAME_WIDTH * GAME_HEIGHT)> cells;
+	std::array<std::unique_ptr<Cell>, TOTAL_CELLS> cells;
 };
