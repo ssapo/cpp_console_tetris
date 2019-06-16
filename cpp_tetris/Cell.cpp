@@ -1,6 +1,8 @@
 #include "Cell.h"
 #include "Renderer.h"
 
+TETRIS_START
+
 Cell::Cell(int x, int y, bool is_cell, unsigned short color)
 	: x(x)
 	, y(y)
@@ -29,3 +31,5 @@ void Cell::render(Renderer* const renderer) noexcept
 {
 	renderer->write(x, y, cell, color);
 }
+
+TETRIS_END

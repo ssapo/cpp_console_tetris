@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlockObject.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -133,8 +134,10 @@
     <ClCompile Include="Updater.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlockObject.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="DoubleBufferedConsole.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLogicBase.h" />
@@ -143,6 +146,9 @@
     <ClInclude Include="IUpdatable.h" />
     <ClInclude Include="Tetris.h" />
     <ClInclude Include="Updater.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

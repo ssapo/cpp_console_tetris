@@ -4,4 +4,3 @@ struct IRenderable
 {
 	virtual void render(Renderer* const renderer) noexcept abstract;
 };
-

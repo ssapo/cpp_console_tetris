@@ -4,6 +4,9 @@
 #include "Renderer.h"
 #include "Updater.h"
 #include "Cell.h"
+#include "BlockObject.h"
+
+TETRIS_START
 
 Tetris::Tetris()
 {
@@ -51,3 +54,4 @@ void Tetris::update(float delta) noexcept
 
 }
 
+TETRIS_END

@@ -1,11 +1,16 @@
 #pragma once
+#include "Define.h"
 #include "GameLogicBase.h"
 #include "IUpdatable.h"
-#include <array>
+
+class Game;
+
+TETRIS_START
 
 class Board;
-class Game;
 class Cell;
+class BlockObject;
+
 class Tetris : public GameLogicBase, public IUpdatable
 {
 public:
@@ -26,4 +31,7 @@ public:
 private:
 	std::unique_ptr<Board> board;
 	std::array<std::unique_ptr<Cell>, TOTAL_CELLS> cells;
+	std::vector<std::unique_ptr<BlockObject>> blocks;
 };
+
+TETRIS_END

@@ -1,5 +1,8 @@
 #pragma once
+#include "Define.h"
 #include "IRenderable.h"
+
+TETRIS_START
 
 class Cell : public IRenderable
 {
@@ -29,3 +32,4 @@ private:
 	unsigned short color;
 };
 
+TETRIS_END

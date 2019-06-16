@@ -1,8 +1,11 @@
 #pragma once
+#include "Define.h"
 #include "IRenderable.h"
 #include "IUpdatable.h"
 #include <vector>
 #include <tuple>
+
+TETRIS_START
 
 class Board : public IRenderable
 {
@@ -16,7 +19,6 @@ public:
 	int get_height() const noexcept { return height; }
 	int get_size() const noexcept { return width * height; }
 
-
 private:
 	int width = 0;
 	int height = 0;
@@ -24,3 +26,5 @@ private:
 
 	std::vector<wchar_t> boards;
 };
+
+TETRIS_END
