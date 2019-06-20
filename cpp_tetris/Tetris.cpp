@@ -5,10 +5,13 @@
 #include "Updater.h"
 #include "Cell.h"
 #include "BlockObject.h"
+#include <iostream>
 
 TETRIS_START
 
 Tetris::Tetris()
+	: sec_timer(0.0f)
+	, frame_timer(0.0f)
 {
 
 }
@@ -51,6 +54,13 @@ bool Tetris::initialize()
 
 void Tetris::update(float delta) noexcept
 {
+	//std::cout << delta << std::endl;
+	frame_timer += delta;
+	if (frame_timer >= TIME_SEC)
+	{
+		frame_timer = 0.0f;
+		sec_timer += TIME_SEC;
+	}
 
 }
 

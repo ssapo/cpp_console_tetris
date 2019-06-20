@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <chrono>
 
 class GameLogicBase;
 class Renderer;
@@ -20,10 +21,18 @@ public:
 	Renderer* get_renderer() const { return renderer.get(); }
 	Updater* get_updater() const { return updater.get(); }
 
+public:	 
+
+
 private:
+	std::chrono::steady_clock::time_point last_update;
 
 	std::unique_ptr<GameLogicBase> game_logic;
 	std::unique_ptr<Renderer> renderer;
 	std::unique_ptr<Updater> updater;
+
+	float delta_time;
+	float fps_timer;
+	float fps_time;
 };
 
