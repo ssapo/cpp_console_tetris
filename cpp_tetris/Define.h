@@ -7,6 +7,7 @@
 #define TETRIS_START namespace CppTetris {
 #define TETRIS_END };
 #define USING_TETRIS using namespace CppTetris;
+#define P(X, Y) (Point((X), (Y)))
 
 TETRIS_START
 

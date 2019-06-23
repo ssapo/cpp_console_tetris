@@ -44,9 +44,47 @@ bool Tetris::initialize()
 			int index = (y * CELL_WIDTH) + x;
 
 			cells[index] = std::make_unique<Cell>(x + 1, y + 1, true, Renderer::TextColor::gray);
+			if (!cells[index])
+			{
+				return false;
+			}
+
 			renderer->add(1, index, cells[index].get());
 		}
 	}
+
+	//auto i_block = std::make_unique<BlockObject>(P(0, 0)
+	//	, new std::array<std::vector<Point>, Constant::COUNT_ROTATION>()
+	//	);
+
+	//auto j_block = std::make_unique<BlockObject>(P(0, 0)
+	//	, new std::array<std::vector<Point>, Constant::COUNT_ROTATION>()
+	//	);
+
+	//auto l_block = std::make_unique<BlockObject>(P(0, 0)
+	//	, new std::array<std::vector<Point>, Constant::COUNT_ROTATION>()
+	//	);
+
+	dic_block_rot['o'] = std::make_unique<BlockWithRotations>(
+		BlockWithRotations{ std::vector<Point>{P(0, 0), P(-1, 0), P(-1, 1), P(0, 1)}
+			, std::vector<Point>{P(0, 0), P(-1, 0), P(-1, 1), P(0, 1)}
+			, std::vector<Point>{P(0, 0), P(-1, 0), P(-1, 1), P(0, 1)}
+			, std::vector<Point>{P(0, 0), P(-1, 0), P(-1, 1), P(0, 1)}
+		}
+	);
+	blocks['o'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['o'].get());
+
+	/*auto s_block = std::make_unique<BlockObject>(P(0, 0)
+		, std::array<std::vector<Point>, Constant::COUNT_ROTATION>()
+		);
+
+	auto t_block = std::make_unique<BlockObject>(P(0, 0)
+		, std::array<std::vector<Point>, Constant::COUNT_ROTATION>()
+		);
+
+	auto z_block = std::make_unique<BlockObject>(P(0, 0)
+		, std::array<std::vector<Point>, Constant::COUNT_ROTATION>()
+		);*/
 
 	updater->add(0, this);
 	return true;
@@ -60,7 +98,13 @@ void Tetris::update(float delta) noexcept
 	{
 		frame_timer = 0.0f;
 		sec_timer += TIME_SEC;
+
+		update_sec(sec_timer);
 	}
+}
+
+void Tetris::update_sec(float sec) noexcept
+{
 
 }
 

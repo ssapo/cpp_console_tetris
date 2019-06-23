@@ -2,6 +2,7 @@
 #include "Define.h"
 #include "GameLogicBase.h"
 #include "IUpdatable.h"
+#include <unordered_map>
 
 class Game;
 
@@ -21,6 +22,8 @@ public:
 
 	virtual void update(float delta) noexcept override;
 
+	void update_sec(float sec) noexcept;
+
 public:
 	static constexpr int GAME_WIDTH = 15;
 	static constexpr int GAME_HEIGHT = 25;
@@ -33,7 +36,8 @@ public:
 private:
 	std::unique_ptr<Board> board;
 	std::array<std::unique_ptr<Cell>, TOTAL_CELLS> cells;
-	std::vector<std::unique_ptr<BlockObject>> blocks;
+	std::unordered_map<char, std::unique_ptr<BlockObject>> blocks;
+	std::unordered_map<char, std::unique_ptr<BlockWithRotations>> dic_block_rot;
 
 	float sec_timer;
 	float frame_timer;
