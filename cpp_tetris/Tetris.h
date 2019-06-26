@@ -1,8 +1,9 @@
 #pragma once
+#include <unordered_map>
 #include "Define.h"
 #include "GameLogicBase.h"
 #include "IUpdatable.h"
-#include <unordered_map>
+#include "Point.h"
 
 class Game;
 
@@ -19,13 +20,7 @@ public:
 	virtual ~Tetris();
 
 	virtual bool initialize() noexcept override;
-
-	bool initialize_blocks() noexcept;
-	BlockObject* make_block() noexcept;
-
 	virtual void update(float delta) noexcept override;
-
-	void update_sec(float sec) noexcept;
 
 public:
 	static constexpr int GAME_WIDTH = 12;
@@ -37,11 +32,21 @@ public:
 	static constexpr float TIME_SEC = 1.0f;
 
 private:
+	bool initialize_blocks() noexcept;
+	
+	void update_sec(float sec) noexcept;
+	
+	std::unique_ptr<BlockObject> make_block(const Point& p) noexcept;
+	
+	Point get_start_point() noexcept;
+
+
+private:
 	std::unique_ptr<Board> board;
 	std::array<std::unique_ptr<Cell>, TOTAL_CELLS> cells;
 	std::unordered_map<char, std::unique_ptr<BlockObject>> blocks;
 	std::unordered_map<char, std::unique_ptr<BlockWithRotations>> dic_block_rot;
-	BlockObject* current_block;
+	std::unique_ptr<BlockObject> current_block;
 
 	float sec_timer;
 	float frame_timer;

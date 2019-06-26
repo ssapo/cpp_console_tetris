@@ -10,6 +10,8 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="BlockObject.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Define.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -24,6 +26,7 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="BlockObject.h" />
+    <ClInclude Include="Point.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

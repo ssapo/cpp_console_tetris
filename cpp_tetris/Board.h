@@ -4,6 +4,7 @@
 #include "IUpdatable.h"
 #include <vector>
 #include <tuple>
+#include "Point.h"
 
 TETRIS_START
 

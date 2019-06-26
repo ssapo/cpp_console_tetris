@@ -47,3 +47,5 @@ void Board::render(Renderer* const renderer) noexcept
 }
 
 TETRIS_END
+
+

@@ -5,7 +5,6 @@
 #include "Updater.h"
 #include "Cell.h"
 #include "BlockObject.h"
-#include <iostream>
 
 TETRIS_START
 
@@ -29,7 +28,7 @@ bool Tetris::initialize() noexcept
 	constexpr int width = GAME_WIDTH;
 	constexpr int height = GAME_HEIGHT;
 
-	board = std::make_unique<Board>(width, height, Renderer::TextColor::red);
+	board = std::make_unique<Board>(width, height, Color::red);
 	if (nullptr == board)
 	{
 		return false;
@@ -43,7 +42,7 @@ bool Tetris::initialize() noexcept
 		{
 			int index = (y * CELL_WIDTH) + x;
 
-			cells[index] = std::make_unique<Cell>(x + 1, y + 1, true, Renderer::TextColor::gray);
+			cells[index] = std::make_unique<Cell>(x + 1, y + 1, true, Color::gray);
 			if (!cells[index])
 			{
 				return false;
@@ -58,7 +57,8 @@ bool Tetris::initialize() noexcept
 		return false;
 	}
 	
-	
+	current_block = make_block(get_start_point());
+	renderer->add(2, 0, current_block.get());
 
 	updater->add(0, this);
 	return true;
@@ -67,8 +67,6 @@ bool Tetris::initialize() noexcept
 // https://imgur.com/a/GZae9T8
 bool CppTetris::Tetris::initialize_blocks() noexcept
 {
-	using Color = Renderer::TextColor;
-
 	// I-block 
 	// бс(бс)бсбс
 	//
@@ -79,7 +77,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 0), P(0, 1), P(0, 2), P(0, 3)}
 		}
 	);
-	blocks['I'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['I'].get());
+	blocks['I'] = std::make_unique<BlockObject>(dic_block_rot['I'].get(), Color::cyan);
 
 	// J-block 
 	// бс(бс)бс
@@ -91,7 +89,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(0, 0), P(0, -1), P(1, -1)}
 		}
 	);
-	blocks['J'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['J'].get());
+	blocks['J'] = std::make_unique<BlockObject>(dic_block_rot['J'].get(), Color::blue);
 
 	// L-block 
 	// бс(бс)бс
@@ -103,7 +101,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(1, 1), P(0, 0), P(0, -1)}
 		}
 	);
-	blocks['L'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['L'].get());
+	blocks['L'] = std::make_unique<BlockObject>(dic_block_rot['L'].get(), Color::dark_green);
 
 	// O-block 
 	// бс(бс)
@@ -115,7 +113,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(-1, 0), P(0, 0), P(0, 1), P(-1, 1)}
 		}
 	);
-	blocks['O'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['O'].get());
+	blocks['O'] = std::make_unique<BlockObject>(dic_block_rot['O'].get(), Color::yellow);
 
 	// S-block 
 	//   (бс)бс
@@ -127,7 +125,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, -1), P(0, 0), P(1, 0), P(1, 1)}
 		}
 	);
-	blocks['S'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['S'].get());
+	blocks['S'] = std::make_unique<BlockObject>(dic_block_rot['S'].get(), Color::green);
 
 
 	// T-block 
@@ -140,7 +138,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(0, 0), P(0, 1), P(1, 0)}
 		}
 	);
-	blocks['T'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['T'].get());
+	blocks['T'] = std::make_unique<BlockObject>(dic_block_rot['T'].get(), Color::dark_margenta);
 
 	// Z-block 
 	// бс(бс)
@@ -152,16 +150,18 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(0, 0), P(1, 0), P(1, -1)}
 		}
 	);
-	blocks['Z'] = std::make_unique<BlockObject>(P(0, 0), dic_block_rot['Z'].get());
+	blocks['Z'] = std::make_unique<BlockObject>(dic_block_rot['Z'].get(), Color::dark_red);
 
 	return true;
 }
 
-BlockObject* CppTetris::Tetris::make_block() noexcept
+std::unique_ptr<BlockObject> Tetris::make_block(const Point& center) noexcept
 {
 	auto iter = blocks.begin();
 	std::advance(iter, rand_between(0, blocks.size()));
-	return iter->second.get();
+
+	auto prototype_block = iter->second.get();
+	return std::make_unique<BlockObject>(center, prototype_block);
 }
 
 void Tetris::update(float delta) noexcept
@@ -179,6 +179,11 @@ void Tetris::update(float delta) noexcept
 void Tetris::update_sec(float sec) noexcept
 {
 
+}
+
+Point CppTetris::Tetris::get_start_point() noexcept
+{
+	return P((GAME_WIDTH / 2), 0);
 }
 
 TETRIS_END

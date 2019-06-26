@@ -126,9 +126,11 @@
     <ClCompile Include="BlockObject.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Define.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameLogicBase.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Tetris.cpp" />
     <ClCompile Include="Updater.cpp" />
@@ -141,6 +143,7 @@
     <ClInclude Include="DoubleBufferedConsole.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLogicBase.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="IUpdatable.h" />
