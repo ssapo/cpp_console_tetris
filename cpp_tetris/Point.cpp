@@ -2,19 +2,19 @@
 
 TETRIS_START
 
-int getX(const Point& p)
+int get_x(const Point& p)
 {
 	return std::get<0>(p);
 }
 
-int getY(const Point& p)
+int get_y(const Point& p)
 {
 	return std::get<1>(p);
 }
 
 Point point_add(const Point& a, const Point& b)
 {
-	return P(getX(a) + getX(b), getY(a) + getY(b));
+	return P(get_x(a) + get_x(b), get_y(a) + get_y(b));
 }
 
 int get_width(const std::vector<Point>* rotations)
@@ -26,12 +26,12 @@ int get_width(const std::vector<Point>& rotations)
 {
 	static auto pr = [](const Point& p1, const Point& p2)
 	{
-		return getX(p1) < getX(p2);
+		return get_x(p1) < get_x(p2);
 	};
 
 	auto minx = *std::min_element(rotations.begin(), rotations.end(), pr);
 	auto maxx = *std::max_element(rotations.begin(), rotations.end(), pr);
-	return getX(maxx) - getX(minx);
+	return get_x(maxx) - get_x(minx) + 1;
 }
 
 TETRIS_END

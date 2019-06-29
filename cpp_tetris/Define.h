@@ -19,4 +19,5 @@ struct Constant
 
 typedef Renderer::TextColor Color;
 int rand_between(int min, int max) noexcept;
+
 TETRIS_END

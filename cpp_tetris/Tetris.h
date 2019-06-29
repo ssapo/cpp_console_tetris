@@ -22,6 +22,22 @@ public:
 	virtual bool initialize() noexcept override;
 	virtual void update(float delta) noexcept override;
 
+private:
+	bool initialize_blocks() noexcept;
+	
+	void update_sec(float sec) noexcept;
+	
+	std::unique_ptr<BlockObject> make_random_block(const Point& p) noexcept;
+	std::unique_ptr<BlockObject> make_block(const char c, const Point& p) noexcept;
+	
+	Point get_start_point() const noexcept
+	{
+		return P((GAME_WIDTH / 2), 0);
+	}
+
+	void set_block_to_cells(BlockObject* block) noexcept;
+	void set_block_to_cells(const Point& p, unsigned short c) noexcept;
+
 public:
 	static constexpr int GAME_WIDTH = 12;
 	static constexpr int GAME_HEIGHT = 25;
@@ -30,16 +46,6 @@ public:
 	static constexpr int TOTAL_CELLS = (CELL_WIDTH) * (CELL_HEIGHT);
 
 	static constexpr float TIME_SEC = 1.0f;
-
-private:
-	bool initialize_blocks() noexcept;
-	
-	void update_sec(float sec) noexcept;
-	
-	std::unique_ptr<BlockObject> make_block(const Point& p) noexcept;
-	
-	Point get_start_point() noexcept;
-
 
 private:
 	std::unique_ptr<Board> board;
