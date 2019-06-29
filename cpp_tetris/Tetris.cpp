@@ -57,32 +57,32 @@ bool Tetris::initialize() noexcept
 		return false;
 	}
 	
-	current_block = make_block('J', get_start_point());
-	current_block->move(P(0, 19));
+	current_block = make_block('J');
+	current_block->move_center(P(0, 19));
 	set_block_to_cells(current_block.get());
 
-	current_block = make_block('Z', get_start_point());
-	current_block->move(P(0, 16));
+	current_block = make_block('Z');
+	current_block->move_center(P(0, 16));
 	set_block_to_cells(current_block.get());
 
-	current_block = make_block('I', get_start_point());
-	current_block->move(P(0, 13));
+	current_block = make_block('I');
+	current_block->move_center(P(0, 13));
 	set_block_to_cells(current_block.get());
 
-	current_block = make_block('S', get_start_point());
-	current_block->move(P(0, 10));
+	current_block = make_block('S');
+	current_block->move_center(P(0, 10));
 	set_block_to_cells(current_block.get());
 
-	current_block = make_block('O', get_start_point());
-	current_block->move(P(0, 7));
+	current_block = make_block('O');
+	current_block->move_center(P(0, 7));
 	set_block_to_cells(current_block.get());
 
-	current_block = make_block('L', get_start_point());
-	current_block->move(P(0, 4));
+	current_block = make_block('L');
+	current_block->move_center(P(0, 4));
 	set_block_to_cells(current_block.get());
 
-	current_block = make_block('T', get_start_point());
-	current_block->move(P(0, 1));
+	current_block = make_block('T');
+	current_block->move_center(P(0, 1));
 	set_block_to_cells(current_block.get());
 
 	updater->add(0, this);
@@ -180,21 +180,26 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 	return true;
 }
 
-std::unique_ptr<BlockObject> Tetris::make_random_block(const Point& center) noexcept
+std::unique_ptr<BlockObject> Tetris::make_random_block() noexcept
 {
 	auto iter = blocks.begin();
 	std::advance(iter, rand_between(0, blocks.size()));
 
 	auto prototype_block = iter->second.get();
-	auto new_block = std::make_unique<BlockObject>(center, prototype_block);
+	auto new_block = std::make_unique<BlockObject>(get_start_point(prototype_block), prototype_block);
 	return new_block;
 }
 
-std::unique_ptr<BlockObject> Tetris::make_block(const char c, const Point& center) noexcept
+std::unique_ptr<BlockObject> Tetris::make_block(const char key) noexcept
 {
-	auto prototype_block = blocks[c].get();
-	auto new_block = std::make_unique<BlockObject>(center, prototype_block);
+	auto prototype_block = blocks[key].get();
+	auto new_block = std::make_unique<BlockObject>(get_start_point(prototype_block), prototype_block);
 	return new_block;
+}
+
+Point Tetris::get_start_point(BlockObject* object) const noexcept
+{
+	return P((GAME_WIDTH / 2) - (get_width(object->get_points()) / 2), 0);
 }
 
 void Tetris::set_block_to_cells(BlockObject* block) noexcept
@@ -227,7 +232,55 @@ void Tetris::update(float delta) noexcept
 
 void Tetris::update_sec(float sec) noexcept
 {
+	//cleanup_cells();
+	//move_down();
+}
 
+void Tetris::move_down() noexcept
+{
+	auto points = current_block->get_points_added_center(P(0, 1));
+	if (false == interaction_cells(points))
+	{
+		current_block->move_center(P(0, 1));
+	}
+
+	set_block_to_cells(current_block.get());
+}
+
+bool Tetris::interaction_cells(const std::vector<Point>& points) const noexcept
+{
+	for (const auto& e : points)
+	{
+		int x = get_x(e);
+		if (x < 0 || x >= CELL_WIDTH)
+		{
+			return true;
+		}
+
+		int y = get_y(e);
+		if (y < 0 || y >= CELL_HEIGHT)
+		{
+			return true;
+		}
+
+		auto cell = cells[y * CELL_WIDTH + x].get();
+		if (cell->is_fill())
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void Tetris::cleanup_cells() noexcept
+{
+	for (const auto& e : cells)
+	{
+		e->cleanup();
+	}
 }
 
 TETRIS_END
+
+

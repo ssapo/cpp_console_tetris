@@ -10,14 +10,18 @@ public:
 	explicit Cell(int x, int y, bool empty, unsigned short c);
 	virtual ~Cell();
 
+	void cleanup() noexcept;
+	
 	int get_x() const noexcept { return x; }
 	void set_x(int x) noexcept { this->x = x; }
 	
 	int get_y() const noexcept { return y; }
 	void set_y(int y) noexcept { this->y = y; }
 	
+	bool is_fill();
+
 	wchar_t get_cell() const noexcept { return cell; }
-	void set_empty_cell();
+	void set_dot_cell();
 	void set_fill_cell();
 	
 	unsigned short get_color() const noexcept { return color; }

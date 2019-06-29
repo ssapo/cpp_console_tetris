@@ -27,16 +27,17 @@ private:
 	
 	void update_sec(float sec) noexcept;
 	
-	std::unique_ptr<BlockObject> make_random_block(const Point& p) noexcept;
-	std::unique_ptr<BlockObject> make_block(const char c, const Point& p) noexcept;
+	std::unique_ptr<BlockObject> make_random_block() noexcept;
+	std::unique_ptr<BlockObject> make_block(const char c) noexcept;
 	
-	Point get_start_point() const noexcept
-	{
-		return P((GAME_WIDTH / 2), 0);
-	}
+	Point get_start_point(BlockObject* object) const noexcept;
 
 	void set_block_to_cells(BlockObject* block) noexcept;
 	void set_block_to_cells(const Point& p, unsigned short c) noexcept;
+	
+	void cleanup_cells() noexcept;
+	bool interaction_cells(const std::vector<Point>& points) const noexcept;
+	void move_down() noexcept;
 
 public:
 	static constexpr int GAME_WIDTH = 12;

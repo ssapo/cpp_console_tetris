@@ -46,7 +46,7 @@ public:
 	{
 		static constexpr wchar_t fill = L'¡á';
 		static constexpr wchar_t empty = L' ';
-		static constexpr wchar_t cell = L'¡¤';
+		static constexpr wchar_t dot = L'¡¤';
 	};
 
 private:

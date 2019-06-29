@@ -15,10 +15,12 @@ public:
 	virtual ~BlockObject();
 
 	void rotate() noexcept;
-	void move(const Point& p) noexcept;
 
-	Point calculate_center(const Point& point) const noexcept;
+	Point get_center() const noexcept { return center; }
+	void set_center(const Point& p) noexcept { center = p; }
+	void move_center(const Point& p) noexcept { center = point_add(center, p); }
 	std::vector<Point> get_points() const { return points->at(current_rotate); }
+	std::vector<Point> get_points_added_center(const Point& p) const;
 	std::vector<Point> get_points_added_center() const;
 	const BlockWithRotations* get_rotations() const { return points; }
 	const unsigned short get_color() const { return color; }

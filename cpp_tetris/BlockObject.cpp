@@ -19,7 +19,7 @@ BlockObject::BlockObject(const Point& center, const BlockObject* prototype_block
 }
 
 BlockObject::BlockObject(const Point& center, const BlockObject& prototype_block)
-	: center(prototype_block.calculate_center(center))
+	: center(center)
 	, points(prototype_block.points)
 	, current_rotate(0)
 	, color(prototype_block.color)
@@ -32,31 +32,26 @@ BlockObject::~BlockObject()
 
 }
 
-Point BlockObject::calculate_center(const Point& center) const noexcept
-{
-	return P(get_x(center) - get_width(get_points()) / 2, get_y(center));
-}
-
-std::vector<Point> BlockObject::get_points_added_center() const
+std::vector<Point> BlockObject::get_points_added_center(const Point& c) const
 {
 	auto retVal = std::vector<Point>();
 	auto p = get_points();
 	for (const auto& e : p)
 	{
-		retVal.push_back(point_add(center, e));
+		retVal.push_back(point_add(point_add(center, c), e));
 	}
 
 	return retVal;
 }
 
+std::vector<Point> BlockObject::get_points_added_center() const
+{
+	return get_points_added_center(P(0, 0));
+}
+
 void BlockObject::rotate() noexcept
 {
 	current_rotate = (++current_rotate) % Constant::COUNT_ROTATION;
-}
-
-void BlockObject::move(const Point& p) noexcept
-{
-	center = point_add(center, p);
 }
 
 void BlockObject::render(Renderer* const renderer) noexcept
