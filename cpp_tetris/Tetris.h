@@ -27,14 +27,16 @@ private:
 	
 	void update_sec(float sec) noexcept;
 	
-	std::unique_ptr<BlockObject> make_random_block() noexcept;
-	std::unique_ptr<BlockObject> make_block(const char c) noexcept;
+	BlockObject* make_block_random() noexcept;
+	BlockObject* make_block_key(const char c) noexcept;
+	BlockObject* make_block(const BlockObject* const block) noexcept;
 	
-	Point get_start_point(BlockObject* object) const noexcept;
+	Point get_start_point(const BlockObject* const object) const noexcept;
 
 	void set_block_to_cells(BlockObject* block) noexcept;
 	void set_block_to_cells(const Point& p, unsigned short c) noexcept;
-	
+	void set_blocks_to_cells() noexcept;
+
 	void cleanup_cells() noexcept;
 	bool interaction_cells(const std::vector<Point>& points) const noexcept;
 	void move_down() noexcept;
@@ -51,9 +53,12 @@ public:
 private:
 	std::unique_ptr<Board> board;
 	std::array<std::unique_ptr<Cell>, TOTAL_CELLS> cells;
-	std::unordered_map<char, std::unique_ptr<BlockObject>> blocks;
+	std::unordered_map<char, std::unique_ptr<BlockObject>> prototypes;
 	std::unordered_map<char, std::unique_ptr<BlockWithRotations>> dic_block_rot;
-	std::unique_ptr<BlockObject> current_block;
+	
+	std::unordered_map<int, std::unique_ptr<BlockObject>> blocks;
+	BlockObject* current_block;
+	int block_index;
 
 	float sec_timer;
 	float frame_timer;

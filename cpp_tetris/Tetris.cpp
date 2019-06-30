@@ -11,6 +11,8 @@ TETRIS_START
 Tetris::Tetris()
 	: sec_timer(0.0f)
 	, frame_timer(0.0f)
+	, block_index(0)
+	, current_block(nullptr)
 {
 
 }
@@ -56,34 +58,6 @@ bool Tetris::initialize() noexcept
 	{
 		return false;
 	}
-	
-	current_block = make_block('J');
-	current_block->move_center(P(0, 19));
-	set_block_to_cells(current_block.get());
-
-	current_block = make_block('Z');
-	current_block->move_center(P(0, 16));
-	set_block_to_cells(current_block.get());
-
-	current_block = make_block('I');
-	current_block->move_center(P(0, 13));
-	set_block_to_cells(current_block.get());
-
-	current_block = make_block('S');
-	current_block->move_center(P(0, 10));
-	set_block_to_cells(current_block.get());
-
-	current_block = make_block('O');
-	current_block->move_center(P(0, 7));
-	set_block_to_cells(current_block.get());
-
-	current_block = make_block('L');
-	current_block->move_center(P(0, 4));
-	set_block_to_cells(current_block.get());
-
-	current_block = make_block('T');
-	current_block->move_center(P(0, 1));
-	set_block_to_cells(current_block.get());
 
 	updater->add(0, this);
 	return true;
@@ -102,7 +76,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, -2), P(0, 1), P(0, 0), P(0, -1)}
 		}
 	);
-	blocks['I'] = std::make_unique<BlockObject>(dic_block_rot['I'].get(), Color::cyan);
+	prototypes['I'] = std::make_unique<BlockObject>(dic_block_rot['I'].get(), Color::cyan);
 
 	// J-block 
 	// ■(■)■
@@ -114,7 +88,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(0, 0), P(0, -1), P(1, -1)}
 		}
 	);
-	blocks['J'] = std::make_unique<BlockObject>(dic_block_rot['J'].get(), Color::blue);
+	prototypes['J'] = std::make_unique<BlockObject>(dic_block_rot['J'].get(), Color::blue);
 
 	// L-block 
 	// ■(■)■
@@ -126,7 +100,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(1, 1), P(0, 0), P(0, -1)}
 		}
 	);
-	blocks['L'] = std::make_unique<BlockObject>(dic_block_rot['L'].get(), Color::white);
+	prototypes['L'] = std::make_unique<BlockObject>(dic_block_rot['L'].get(), Color::white);
 
 	// O-block 
 	// ■(■)
@@ -138,7 +112,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(-1, 0), P(0, 0), P(0, 1), P(-1, 1)}
 		}
 	);
-	blocks['O'] = std::make_unique<BlockObject>(dic_block_rot['O'].get(), Color::yellow);
+	prototypes['O'] = std::make_unique<BlockObject>(dic_block_rot['O'].get(), Color::yellow);
 
 	// S-block 
 	//   (■)■
@@ -150,7 +124,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, -1), P(0, 0), P(1, 0), P(1, 1)}
 		}
 	);
-	blocks['S'] = std::make_unique<BlockObject>(dic_block_rot['S'].get(), Color::green);
+	prototypes['S'] = std::make_unique<BlockObject>(dic_block_rot['S'].get(), Color::green);
 
 
 	// T-block 
@@ -163,7 +137,7 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(0, 0), P(0, 1), P(1, 0)}
 		}
 	);
-	blocks['T'] = std::make_unique<BlockObject>(dic_block_rot['T'].get(), Color::margenta);
+	prototypes['T'] = std::make_unique<BlockObject>(dic_block_rot['T'].get(), Color::margenta);
 
 	// Z-block 
 	// ■(■)
@@ -175,29 +149,40 @@ bool CppTetris::Tetris::initialize_blocks() noexcept
 			, std::vector<Point>{P(0, 1), P(0, 0), P(1, 0), P(1, -1)}
 		}
 	);
-	blocks['Z'] = std::make_unique<BlockObject>(dic_block_rot['Z'].get(), Color::red);
+	prototypes['Z'] = std::make_unique<BlockObject>(dic_block_rot['Z'].get(), Color::red);
 
 	return true;
 }
 
-std::unique_ptr<BlockObject> Tetris::make_random_block() noexcept
+BlockObject* Tetris::make_block_random() noexcept
 {
-	auto iter = blocks.begin();
-	std::advance(iter, rand_between(0, blocks.size()));
-
-	auto prototype_block = iter->second.get();
-	auto new_block = std::make_unique<BlockObject>(get_start_point(prototype_block), prototype_block);
-	return new_block;
+	auto iter = prototypes.begin();
+	std::advance(iter, rand_between(0, prototypes.size()));
+	return make_block(iter->second.get());
 }
 
-std::unique_ptr<BlockObject> Tetris::make_block(const char key) noexcept
+BlockObject* Tetris::make_block_key(const char key) noexcept
 {
-	auto prototype_block = blocks[key].get();
-	auto new_block = std::make_unique<BlockObject>(get_start_point(prototype_block), prototype_block);
-	return new_block;
+	auto prototype_block = prototypes[key].get();
+	return make_block(prototypes[key].get());
 }
 
-Point Tetris::get_start_point(BlockObject* object) const noexcept
+BlockObject* Tetris::make_block(const BlockObject* const block) noexcept
+{
+	using namespace std;
+
+	auto new_block = new BlockObject(block_index, get_start_point(block), block);
+	if (new_block)
+	{
+		blocks.insert(make_pair(block_index, new_block));
+		block_index++;
+		return new_block;
+	}
+
+	return nullptr;
+}
+
+Point Tetris::get_start_point(const BlockObject* const object) const noexcept
 {
 	return P((GAME_WIDTH / 2) - (get_width(object->get_points()) / 2), 0);
 }
@@ -218,6 +203,15 @@ void Tetris::set_block_to_cells(const Point& p, unsigned short c) noexcept
 	cell->set_color(c);
 }
 
+void Tetris::set_blocks_to_cells() noexcept
+{
+	for (const auto& e : blocks)
+	{
+		auto block = e.second.get();
+		set_block_to_cells(block);
+	}
+}
+
 void Tetris::update(float delta) noexcept
 {
 	frame_timer += delta;
@@ -232,8 +226,21 @@ void Tetris::update(float delta) noexcept
 
 void Tetris::update_sec(float sec) noexcept
 {
-	//cleanup_cells();
-	//move_down();
+	cleanup_cells();
+	
+	if (current_block)
+	{
+		move_down();
+	}
+	else
+	{
+		current_block = make_block_random();
+		if (nullptr == current_block)
+		{
+			// 어떻게 채우지?
+		}
+	}
+	set_blocks_to_cells();
 }
 
 void Tetris::move_down() noexcept
@@ -243,8 +250,10 @@ void Tetris::move_down() noexcept
 	{
 		current_block->move_center(P(0, 1));
 	}
-
-	set_block_to_cells(current_block.get());
+	else
+	{
+		current_block = nullptr;
+	}
 }
 
 bool Tetris::interaction_cells(const std::vector<Point>& points) const noexcept
