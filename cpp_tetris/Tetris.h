@@ -21,11 +21,12 @@ public:
 
 	virtual bool initialize() noexcept override;
 	virtual void update(float delta) noexcept override;
+	virtual bool handle_event(char keycode) noexcept override;
 
 private:
 	bool initialize_blocks() noexcept;
 	
-	void update_sec(float sec) noexcept;
+	void update_tick(float sec) noexcept;
 	
 	BlockObject* make_block_random() noexcept;
 	BlockObject* make_block_key(const char c) noexcept;
@@ -38,8 +39,13 @@ private:
 	void set_blocks_to_cells() noexcept;
 
 	void cleanup_cells() noexcept;
-	bool interaction_cells(const std::vector<Point>& points) const noexcept;
+	bool intersection_cells(const std::vector<Point>& points) const noexcept;
+	
+	void rotate() noexcept;
 	void move_down() noexcept;
+	void move_right() noexcept;
+	void move_left() noexcept;
+	void move_to_bottom() noexcept;
 
 public:
 	static constexpr int GAME_WIDTH = 12;
@@ -48,14 +54,21 @@ public:
 	static constexpr int CELL_HEIGHT = (GAME_HEIGHT - 2);
 	static constexpr int TOTAL_CELLS = (CELL_WIDTH) * (CELL_HEIGHT);
 
-	static constexpr float TIME_SEC = 1.0f;
+	static constexpr float TIME_TICK = 1.0f;
+
+	static constexpr int KEY_LEFT = 75;
+	static constexpr int KEY_RIGHT = 77;
+	static constexpr int KEY_UP = 72;
+	static constexpr int KEY_DOWN = 80;
+	static constexpr int KEY_SPACE = 32;
+	static constexpr int KEY_EXIT = 27;
 
 private:
 	std::unique_ptr<Board> board;
 	std::array<std::unique_ptr<Cell>, TOTAL_CELLS> cells;
 	std::unordered_map<char, std::unique_ptr<BlockObject>> prototypes;
 	std::unordered_map<char, std::unique_ptr<BlockWithRotations>> dic_block_rot;
-	
+
 	std::unordered_map<int, std::unique_ptr<BlockObject>> blocks;
 	BlockObject* current_block;
 	int block_index;
