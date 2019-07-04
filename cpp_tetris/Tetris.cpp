@@ -215,19 +215,17 @@ void Tetris::set_blocks_to_cells() noexcept
 void Tetris::update(float delta) noexcept
 {
 	frame_timer += delta;
-	if (frame_timer >= TIME_SEC)
+	if (frame_timer >= TIME_TICK)
 	{
 		frame_timer = 0.0f;
-		sec_timer += TIME_SEC;
+		sec_timer += TIME_TICK;
 
-		update_sec(sec_timer);
+		update_tick(sec_timer);
 	}
 }
 
-void Tetris::update_sec(float sec) noexcept
+void Tetris::update_tick(float sec) noexcept
 {
-	cleanup_cells();
-	
 	if (current_block)
 	{
 		move_down();
@@ -240,13 +238,15 @@ void Tetris::update_sec(float sec) noexcept
 			// 어떻게 채우지?
 		}
 	}
+
+	cleanup_cells();
 	set_blocks_to_cells();
 }
 
 void Tetris::move_down() noexcept
 {
 	auto points = current_block->get_points_added_center(P(0, 1));
-	if (false == interaction_cells(points))
+	if (false == intersection_cells(points))
 	{
 		current_block->move_center(P(0, 1));
 	}
@@ -256,7 +256,65 @@ void Tetris::move_down() noexcept
 	}
 }
 
-bool Tetris::interaction_cells(const std::vector<Point>& points) const noexcept
+void Tetris::move_right() noexcept
+{
+	auto points = current_block->get_points_added_center(P(1, 0));
+	if (false == intersection_cells(points))
+	{
+		current_block->move_center(P(1, 0));
+	}
+}
+
+void Tetris::move_left() noexcept
+{
+	auto points = current_block->get_points_added_center(P(-1, 0));
+	if (false == intersection_cells(points))
+	{
+		current_block->move_center(P(-1, 0));
+	}
+}
+
+void Tetris::rotate() noexcept
+{
+
+}
+
+void Tetris::move_to_bottom() noexcept
+{
+
+}
+
+bool Tetris::handle_event(char keycode) noexcept
+{
+	if (keycode == KEY_LEFT)
+	{
+		move_left();
+	}
+	else if (keycode == KEY_RIGHT)
+	{
+		move_right();
+	}
+	else if (keycode == KEY_UP)
+	{
+		rotate();
+	}
+	else if (keycode == KEY_DOWN)
+	{
+		move_down();
+	}
+	else if (keycode == KEY_SPACE)
+	{
+		move_to_bottom();
+	}
+	else if (keycode == KEY_EXIT)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool Tetris::intersection_cells(const std::vector<Point>& points) const noexcept
 {
 	for (const auto& e : points)
 	{
