@@ -25,8 +25,8 @@ BlockObject::BlockObject(int index, const Point& center, const BlockObject* prot
 
 }
 
-BlockObject::BlockObject(int index, const Point& center, const BlockObject& prototype_block)
-	: center(center)
+BlockObject::BlockObject(int index, const Point& c, const BlockObject& prototype_block)
+	: center(c)
 	, index(index)
 	, points(prototype_block.points)
 	, current_rotate(0)
