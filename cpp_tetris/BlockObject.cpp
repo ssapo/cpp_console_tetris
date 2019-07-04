@@ -4,7 +4,7 @@
 TETRIS_START
 
 BlockObject::BlockObject(int index, BlockWithRotations* cached, unsigned short c)
-	: center(center)
+	: center(P(0, 0))
 	, index(index)
 	, points(cached)
 	, current_rotate(0)
@@ -19,14 +19,14 @@ BlockObject::BlockObject(BlockWithRotations* cached, unsigned short c)
 
 }
 
-BlockObject::BlockObject(int index, const Point& center, const BlockObject* prototype_block)
-	: BlockObject(index, center, *prototype_block)
+BlockObject::BlockObject(int index, const Point& p, const BlockObject* prototype_block)
+	: BlockObject(index, p, *prototype_block)
 {
 
 }
 
-BlockObject::BlockObject(int index, const Point& c, const BlockObject& prototype_block)
-	: center(c)
+BlockObject::BlockObject(int index, const Point& p, const BlockObject& prototype_block)
+	: center(p)
 	, index(index)
 	, points(prototype_block.points)
 	, current_rotate(0)
