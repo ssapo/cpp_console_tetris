@@ -28,9 +28,9 @@ private:
 	
 	void update_tick(float sec) noexcept;
 	
-	BlockObject* make_block_random() noexcept;
-	BlockObject* make_block_key(const char c) noexcept;
-	BlockObject* make_block(const BlockObject* const block) noexcept;
+	std::unique_ptr<BlockObject> make_block_random() noexcept;
+	std::unique_ptr<BlockObject> make_block_key(const char c) noexcept;
+	std::unique_ptr<BlockObject> make_block(const BlockObject* const block) noexcept;
 	
 	Point get_start_point(const BlockObject* const object) const noexcept;
 
@@ -39,8 +39,9 @@ private:
 	void set_blocks_to_cells() noexcept;
 
 	void cleanup_cells() noexcept;
-	bool intersection_cells(const std::vector<Point>& points) const noexcept;
+	bool intersection_blocks(const std::vector<Point>& points) const noexcept;
 	
+	bool can_move() const noexcept;
 	void rotate() noexcept;
 	void move_down() noexcept;
 	void move_right() noexcept;
@@ -70,7 +71,7 @@ private:
 	std::unordered_map<char, std::unique_ptr<BlockWithRotations>> dic_block_rot;
 
 	std::unordered_map<int, std::unique_ptr<BlockObject>> blocks;
-	BlockObject* current_block;
+	std::unique_ptr<BlockObject> current_block;
 	int block_index;
 
 	float sec_timer;

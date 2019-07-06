@@ -3,12 +3,19 @@
 
 TETRIS_START
 
+BlockObject::BlockObject(int block_index, BlockWithRotations* rotation_infos, int rotate_value, const Point& new_center, unsigned short color_value, bool is_ready)
+	: index(block_index)
+	, points(rotation_infos)
+	, current_rotate(rotate_value)
+	, center(new_center)
+	, color(color_value)
+	, ready(is_ready)
+{
+
+}
+
 BlockObject::BlockObject(int index, BlockWithRotations* cached, unsigned short c)
-	: center(P(0, 0))
-	, index(index)
-	, points(cached)
-	, current_rotate(0)
-	, color(c)
+	: BlockObject(index, cached, 0, P(0, 0), c, false)
 {
 
 }
@@ -26,14 +33,11 @@ BlockObject::BlockObject(int index, const Point& p, const BlockObject* prototype
 }
 
 BlockObject::BlockObject(int index, const Point& p, const BlockObject& prototype_block)
-	: center(p)
-	, index(index)
-	, points(prototype_block.points)
-	, current_rotate(0)
-	, color(prototype_block.color)
+	: BlockObject(index, prototype_block.points, 0, p, prototype_block.color, false)
 {
 
 }
+
 
 BlockObject::~BlockObject()
 {
@@ -60,6 +64,11 @@ std::vector<Point> BlockObject::get_points_added_center() const
 void BlockObject::rotate() noexcept
 {
 	current_rotate = (++current_rotate) % Constant::COUNT_ROTATION;
+}
+
+void BlockObject::to_ready() noexcept
+{
+	ready = true;
 }
 
 void BlockObject::render(Renderer* const renderer) noexcept

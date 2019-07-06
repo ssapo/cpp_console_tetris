@@ -133,6 +133,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Tetris.cpp" />
+    <ClCompile Include="Tetris_Initialize_Block.cpp" />
     <ClCompile Include="Updater.cpp" />
   </ItemGroup>
   <ItemGroup>

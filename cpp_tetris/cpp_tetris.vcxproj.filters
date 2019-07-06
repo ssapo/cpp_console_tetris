@@ -12,6 +12,7 @@
     <ClCompile Include="BlockObject.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Define.cpp" />
+    <ClCompile Include="Tetris_Initialize_Block.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />

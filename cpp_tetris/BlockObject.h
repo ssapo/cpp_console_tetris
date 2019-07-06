@@ -9,10 +9,22 @@ class Cell;
 class BlockObject : public IRenderable
 {
 public:
+	explicit BlockObject(int block_index
+		, BlockWithRotations* rotation_infos
+		, int rotate_value
+		, const Point& new_center
+		, unsigned short color_value
+		, bool is_ready);
+
 	explicit BlockObject(int index, BlockWithRotations* cached, unsigned short c);
+	
 	explicit BlockObject(BlockWithRotations* cached, unsigned short c);
+	
 	explicit BlockObject(int index, const Point& center, const BlockObject* prototype_block);
+	
 	explicit BlockObject(int index, const Point& center, const BlockObject& prototype_block);
+
+	
 	virtual ~BlockObject();
 
 	void rotate() noexcept;
@@ -28,8 +40,11 @@ public:
 	const BlockWithRotations* get_rotations() const { return points; }
 	const unsigned short get_color() const { return color; }
 
-	int get_index() const { return index; }
-	void set_index(int new_index) { index = new_index; }
+	int get_index() const noexcept { return index; }
+	void set_index(int new_index) noexcept { index = new_index; }
+
+	bool is_ready() const noexcept { return ready; }
+	void to_ready() noexcept;
 
 	virtual void render(Renderer* const renderer) noexcept override;
 
@@ -40,6 +55,8 @@ private:
 	int current_rotate;
 	int index;
 	unsigned short color;
+
+	bool ready;
 };
 
 TETRIS_END
