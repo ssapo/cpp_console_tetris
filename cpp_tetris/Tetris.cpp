@@ -168,12 +168,21 @@ bool Tetris::can_move() const noexcept
 
 void Tetris::rotate() noexcept
 {
-	current_block->rotate();
+	current_block->next_rotate();
+
+	auto points = current_block->get_points_added_center();
+	if (true == intersection_blocks(points))
+	{
+		current_block->prev_rotate();
+	}
 }
 
 void Tetris::move_to_bottom() noexcept
 {
-
+	while (can_move())
+	{
+		move_down();
+	}
 }
 
 bool Tetris::handle_event(char keycode) noexcept

@@ -61,9 +61,14 @@ std::vector<Point> BlockObject::get_points_added_center() const
 	return get_points_added_center(P(0, 0));
 }
 
-void BlockObject::rotate() noexcept
+void BlockObject::next_rotate() noexcept
 {
-	current_rotate = (++current_rotate) % Constant::COUNT_ROTATION;
+	current_rotate = (Constant::COUNT_ROTATION + (++current_rotate)) % Constant::COUNT_ROTATION;
+}
+
+void BlockObject::prev_rotate() noexcept
+{
+	current_rotate = (Constant::COUNT_ROTATION + (--current_rotate)) % Constant::COUNT_ROTATION;
 }
 
 void BlockObject::to_ready() noexcept

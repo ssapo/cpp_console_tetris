@@ -16,9 +16,9 @@ bool Tetris::initialize_blocks() noexcept
 	//
 	dic_block_rot['I'] = std::make_unique<BlockWithRotations>(
 		BlockWithRotations{ std::vector<Point>{P(2, 0), P(-1, 0), P(0, 0), P(1, 0)}
-			, std::vector<Point>{P(0, -2), P(0, 1), P(0, 0), P(0, -1)}
+			, std::vector<Point>{P(0, 2), P(0, 1), P(0, 0), P(0, -1)}
 			, std::vector<Point>{P(2, 0), P(-1, 0), P(0, 0), P(1, 0)}
-			, std::vector<Point>{P(0, -2), P(0, 1), P(0, 0), P(0, -1)}
+			, std::vector<Point>{P(0, 2), P(0, 1), P(0, 0), P(0, -1)}
 		}
 	);
 	prototypes['I'] = std::make_unique<BlockObject>(dic_block_rot['I'].get(), Color::cyan);
@@ -77,9 +77,9 @@ bool Tetris::initialize_blocks() noexcept
 	//    бс
 	dic_block_rot['T'] = std::make_unique<BlockWithRotations>(
 		BlockWithRotations{ std::vector<Point>{P(-1, 0), P(0, 0), P(1, 0), P(0, 1)}
-			, std::vector<Point>{P(0, -1), P(0, 0), P(0, -1), P(-1, 0)}
+			, std::vector<Point>{P(0, 1), P(0, 0), P(0, -1), P(-1, 0)}
 			, std::vector<Point>{P(1, 0), P(0, 0), P(-1, 0), P(0, -1)}
-			, std::vector<Point>{P(0, 1), P(0, 0), P(0, 1), P(1, 0)}
+			, std::vector<Point>{P(0, -1), P(0, 0), P(0, 1), P(1, 0)}
 		}
 	);
 	prototypes['T'] = std::make_unique<BlockObject>(dic_block_rot['T'].get(), Color::margenta);

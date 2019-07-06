@@ -27,7 +27,8 @@ public:
 	
 	virtual ~BlockObject();
 
-	void rotate() noexcept;
+	void next_rotate() noexcept;
+	void prev_rotate() noexcept;
 
 	Point get_center() const noexcept { return center; }
 	void set_center(const Point& p) noexcept { center = p; }
