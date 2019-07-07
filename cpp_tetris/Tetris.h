@@ -55,7 +55,7 @@ public:
 	static constexpr int CELL_HEIGHT = (GAME_HEIGHT - 2);
 	static constexpr int TOTAL_CELLS = (CELL_WIDTH) * (CELL_HEIGHT);
 
-	static constexpr float TIME_TICK = 1.0f;
+	static constexpr float TIME_TICK = 0.8f;
 
 	static constexpr int KEY_LEFT = 75;
 	static constexpr int KEY_RIGHT = 77;
