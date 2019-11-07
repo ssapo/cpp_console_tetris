@@ -5,14 +5,8 @@ USING_TETRIS
 
 int main()
 {
-	if (auto let = std::make_unique<Tetris>())
-	{
-		auto game = std::make_unique<Game>(std::move(let));
-		if (game)
-		{
-			return game->main();
-		}
-	}
+	Tetris tetris_rogic;
+	Game excuter(tetris_rogic);
 
-	return 0;
+	return excuter.main();
 }

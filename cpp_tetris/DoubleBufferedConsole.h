@@ -91,7 +91,7 @@ public:
 			for (auto x = 0; x < width; ++x)
 			{
 				charInfoBuffer[x + width * y].Attributes = attribute;
-				if constexpr (std::is_same<char_t, wchar_t>::value)
+				if (std::is_same<char_t, wchar_t>::value)
 					charInfoBuffer[x + width * y].Char.UnicodeChar = filling;
 				else
 					charInfoBuffer[x + width * y].Char.AsciiChar = filling;
@@ -103,7 +103,7 @@ public:
 	void write(const int x, const int y, const char_t c, unsigned short attribute)
 	{
 		const auto coord = x + y * width;
-		if constexpr (std::is_same<char_t, wchar_t>::value)
+		if (std::is_same<char_t, wchar_t>::value)
 			charInfoBuffer[x + width * y].Char.UnicodeChar = c;
 		else
 			charInfoBuffer[x + width * y].Char.AsciiChar = c;

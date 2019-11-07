@@ -24,7 +24,7 @@ void Renderer::render() noexcept
 			continue;
 		}
 
-		const auto& container = *e.second.get();
+		const auto& container = e->second.get();
 		for (const auto& f : container)
 		{
 			f.second->render(this);
@@ -34,7 +34,7 @@ void Renderer::render() noexcept
 	buffer->flip();
 }
 
-void Renderer::add(int order, int sort, IRenderable* object) noexcept
+void Renderer::add(int order, int sort, IRenderable& object) noexcept
 {
 	if (objects.end() == objects.find(order))
 	{
