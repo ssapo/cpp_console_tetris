@@ -24,8 +24,9 @@ Tetris::~Tetris()
 
 bool Tetris::initialize() noexcept
 {
-	auto renderer = get_game()->get_renderer();
-	auto updater = get_game()->get_updater();
+	const auto& game = get_game();
+	auto renderer = game.get_renderer();
+	auto updater = game.get_updater();
 
 	constexpr int width = GAME_WIDTH;
 	constexpr int height = GAME_HEIGHT;
@@ -36,7 +37,7 @@ bool Tetris::initialize() noexcept
 		return false;
 	}
 
-	renderer->add(0, 0, board.get());
+	renderer->add(0, 0, *board);
 
 	for (int y = 0; y < CELL_HEIGHT; ++y)
 	{
@@ -50,7 +51,7 @@ bool Tetris::initialize() noexcept
 				return false;
 			}
 
-			renderer->add(1, index, cells[index].get());
+			renderer->add(1, index, *(cells[index]));
 		}
 	}
 
@@ -72,7 +73,7 @@ Point Tetris::get_start_point(const BlockObject* const object) const noexcept
 
 void Tetris::set_block_to_cells(BlockObject* block) noexcept
 {
-	auto points = block->get_points_added_center();
+	const auto& points = block->get_points_added_center();
 	for (const auto& e : points)
 	{
 		set_block_to_cells(e, block->get_color());

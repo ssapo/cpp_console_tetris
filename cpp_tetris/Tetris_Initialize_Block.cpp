@@ -112,7 +112,7 @@ std::unique_ptr<BlockObject> Tetris::make_block_key(const char key) noexcept
 	return make_block(prototypes[key].get());
 }
 
-std::unique_ptr<BlockObject> Tetris::make_block(const BlockObject* const block) noexcept
+std::unique_ptr<BlockObject> Tetris::make_block(const BlockObject& block) noexcept
 {
 	return std::make_unique<BlockObject>(block_index, get_start_point(block), block);
 }

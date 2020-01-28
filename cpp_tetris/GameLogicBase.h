@@ -16,11 +16,5 @@ public:
 
 	bool start_game();
 	virtual bool initialize() noexcept abstract;
-
-	void set_game(Game* game) { m_game = game; }
-	Game* get_game() const { return m_game; }
-
-private:
-	Game* m_game;
 };
 

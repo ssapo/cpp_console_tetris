@@ -10,17 +10,15 @@ class BlockObject : public IRenderable
 {
 public:
 	explicit BlockObject(int block_index
-		, BlockWithRotations* rotation_infos
+		, BlockWithRotations& rotation_infos
 		, int rotate_value
 		, const Point& new_center
 		, unsigned short color_value
 		, bool is_ready);
 
-	explicit BlockObject(int index, BlockWithRotations* cached, unsigned short c);
+	explicit BlockObject(int index, BlockWithRotations& cached, unsigned short c);
 	
-	explicit BlockObject(BlockWithRotations* cached, unsigned short c);
-	
-	explicit BlockObject(int index, const Point& center, const BlockObject* prototype_block);
+	explicit BlockObject(BlockWithRotations& cached, unsigned short c);
 	
 	explicit BlockObject(int index, const Point& center, const BlockObject& prototype_block);
 

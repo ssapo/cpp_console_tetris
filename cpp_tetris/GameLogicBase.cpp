@@ -4,7 +4,6 @@
 #include "Updater.h"
 
 GameLogicBase::GameLogicBase()
-	: m_game(nullptr)
 {
 }
 
@@ -15,7 +14,7 @@ GameLogicBase::~GameLogicBase()
 
 bool GameLogicBase::start_game()
 {
-	return m_game ? initialize() : false;
+	return initialize();
 }
 
 void GameLogicBase::render(Renderer* const renderer) noexcept
