@@ -15,7 +15,7 @@ public:
 	virtual ~Renderer();
 	
 	void render() noexcept;
-	void add(int order, int sort, IRenderable* object) noexcept;
+	void add(int order, int sort, IRenderable& object) noexcept;
 
 	void write(const int x, const int y, const wchar_t c, unsigned short attribute);
 

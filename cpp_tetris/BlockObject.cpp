@@ -26,18 +26,11 @@ BlockObject::BlockObject(BlockWithRotations* cached, unsigned short c)
 
 }
 
-BlockObject::BlockObject(int index, const Point& p, const BlockObject* prototype_block)
-	: BlockObject(index, p, *prototype_block)
-{
-
-}
-
 BlockObject::BlockObject(int index, const Point& p, const BlockObject& prototype_block)
 	: BlockObject(index, prototype_block.points, 0, p, prototype_block.color, false)
 {
 
 }
-
 
 BlockObject::~BlockObject()
 {

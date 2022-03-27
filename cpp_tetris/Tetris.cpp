@@ -22,9 +22,8 @@ Tetris::~Tetris()
 
 }
 
-bool Tetris::initialize() noexcept
+bool Tetris::initialize(const Game& game) noexcept
 {
-	const auto& game = get_game();
 	auto renderer = game.get_renderer();
 	auto updater = game.get_updater();
 
@@ -66,9 +65,9 @@ bool Tetris::initialize() noexcept
 	return true;
 }
 
-Point Tetris::get_start_point(const BlockObject* const object) const noexcept
+Point Tetris::get_start_point(const BlockObject& object) const noexcept
 {
-	return P((GAME_WIDTH / 2) - (get_width(object->get_points()) / 2), 0);
+	return P((GAME_WIDTH / 2) - (get_width(object.get_points()) / 2), 0);
 }
 
 void Tetris::set_block_to_cells(BlockObject* block) noexcept

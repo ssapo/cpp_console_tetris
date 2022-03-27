@@ -14,7 +14,7 @@ public:
 	void render(Renderer* const renderer) noexcept;
 	void update(Updater* const updater, float delta) noexcept;
 
-	bool start_game();
-	virtual bool initialize() noexcept abstract;
+	bool start_game(const Game& game);
+	virtual bool initialize(const Game& game) noexcept abstract;
 };
 

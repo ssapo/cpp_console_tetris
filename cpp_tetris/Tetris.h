@@ -19,7 +19,7 @@ public:
 	explicit Tetris();
 	virtual ~Tetris();
 
-	virtual bool initialize() noexcept override;
+	virtual bool initialize(const Game& game) noexcept override;
 	virtual void update(float delta) noexcept override;
 	virtual bool handle_event(char keycode) noexcept override;
 
@@ -30,9 +30,9 @@ private:
 	
 	std::unique_ptr<BlockObject> make_block_random() noexcept;
 	std::unique_ptr<BlockObject> make_block_key(const char c) noexcept;
-	std::unique_ptr<BlockObject> make_block(const BlockObject* const block) noexcept;
+	std::unique_ptr<BlockObject> make_block(const BlockObject& block) noexcept;
 	
-	Point get_start_point(const BlockObject* const object) const noexcept;
+	Point get_start_point(const BlockObject& object) const noexcept;
 
 	void set_block_to_cells(BlockObject* block) noexcept;
 	void set_block_to_cells(const Point& p, unsigned short c) noexcept;

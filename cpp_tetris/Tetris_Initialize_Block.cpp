@@ -103,13 +103,13 @@ std::unique_ptr<BlockObject> Tetris::make_block_random() noexcept
 {
 	auto iter = prototypes.begin();
 	std::advance(iter, rand_between(0, prototypes.size()));
-	return make_block(iter->second.get());
+	return make_block(*(iter->second.get()));
 }
 
 std::unique_ptr<BlockObject> Tetris::make_block_key(const char key) noexcept
 {
 	auto prototype_block = prototypes[key].get();
-	return make_block(prototypes[key].get());
+	return make_block(*(prototypes[key].get()));
 }
 
 std::unique_ptr<BlockObject> Tetris::make_block(const BlockObject& block) noexcept
