@@ -18,11 +18,8 @@ public:
 	void update(const float& delta) noexcept;
 	void render() noexcept;
 
-	const Renderer& get_renderer() const { return *renderer; }
-	const Updater& get_updater() const { return *updater; }
-
-public:	 
-
+	Renderer* get_renderer() const { return renderer.get(); }
+	Updater* get_updater() const { return updater.get(); }
 
 private:
 	std::chrono::steady_clock::time_point last_update;

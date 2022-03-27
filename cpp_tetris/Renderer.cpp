@@ -24,7 +24,7 @@ void Renderer::render() noexcept
 			continue;
 		}
 
-		const auto& container = e->second.get();
+		const auto& container = *(e.second);
 		for (const auto& f : container)
 		{
 			f.second->render(this);
@@ -39,13 +39,13 @@ void Renderer::add(int order, int sort, IRenderable& object) noexcept
 	if (objects.end() == objects.find(order))
 	{
 		auto map = std::make_unique<std::map<int, IRenderable*>>();
-		map->emplace(sort, object);
+		map->emplace(sort, &object);
 		objects.emplace(order, std::move(map));
 	}
 	else
 	{
 		auto map = objects[order].get();
-		map->emplace(sort, object);
+		map->emplace(std::make_pair(sort, &object));
 	}
 }
 

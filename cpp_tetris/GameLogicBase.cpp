@@ -12,9 +12,9 @@ GameLogicBase::~GameLogicBase()
 
 }
 
-bool GameLogicBase::start_game()
+bool GameLogicBase::start_game(const Game& game)
 {
-	return initialize();
+	return initialize(game);
 }
 
 void GameLogicBase::render(Renderer* const renderer) noexcept
