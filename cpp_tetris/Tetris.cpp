@@ -59,7 +59,11 @@ bool Tetris::initialize(const Game& game) noexcept
 		return false;
 	}
 
-	current_block = make_block_random();
+        current_block = make_block_random();
+        if (!current_block)
+        {
+                return false;
+        }
 
 	updater->add(0, this);
 	return true;
@@ -118,12 +122,17 @@ void Tetris::update(float delta) noexcept
 
 void Tetris::update_tick(float sec) noexcept
 {
-	if (can_move())
-	{
-		move_down();
-	}
-	else
-	{
+        if (!current_block)
+        {
+                return;
+        }
+
+        if (can_move())
+        {
+                move_down();
+        }
+        else
+        {
 		current_block->to_ready();
 	}
 }
